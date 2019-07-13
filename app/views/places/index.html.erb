@@ -1,5 +1,6 @@
 <%= will_paginate @places, renderer: BootstrapPagination::Rails %>
   <br />
+
 <% @places.each do |place| %>
   <div class="booyah-box col-10 offset-1">
     <h1><%= link_to place.name, place_path(place) %></h1>
@@ -9,6 +10,18 @@
       <% if place.user.present? %>
         <small><%= place.user.email %></small>
       <% end %>
+
+    <% if place.comments.present? %>
+      <div class="col-12">
+        <blockquote>
+        <% if place.comments.last.humanized_rating.present? %>
+        <b><%= place.comments.last.humanized_rating %></b> -
+        <% end %>
+        <%= place.comments.last.message %>
+        <small><%= place.comments.last.user.email %></small>
+      </blockquote>
+    </div>
+    <% end %>
   </div>
 <% end %>
 
